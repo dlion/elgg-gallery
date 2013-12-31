@@ -13,33 +13,37 @@ elgg_register_event_handler('init', 'system', 'gallery_init');
 function gallery_init()
 {
   // Add Library
-  elgg_register_library('elgg:gallery', elgg_get_plugins_path().'elgg_gallery/lib/elgg-gallery.php');
+  elgg_register_library('elgg:gallery', elgg_get_plugins_path().'elgg-gallery/lib/elgg-gallery.php');
 
   //Add custom CSS
   elgg_extend_view('css/elgg', 'elgg-gallery/css');
 
-  //Add some js files
+  /*//Add some js files
   $gallery_js = elgg_get_simplecache_url('js', 'elgg-gallery/<name_file>');
   elgg_register_simplecache_view('js/elgg-gallery/<name_file>');
   elgg_register_js('elgg.mygallery',$gallery_js);
+  */
 
 	// routing of urls
-  elgg_register_page_handler('gallery', 'gallery_page_handler');
+  elgg_register_page_handler('elgg-gallery', 'gallery_page_handler');
 
 	// register actions
 	$action_path = elgg_get_plugins_path() . 'elgg-gallery/actions/elgg-gallery';
-	elgg_register_action('elgg-gallery/save', "$action_path/save.php");
+  //Image Upload
+	elgg_register_action('elgg-gallery/uppa', "$action_path/uppa.php");
+  //Delete Image
 	elgg_register_action('elgg-gallery/delete', "$action_path/delete.php");
 }
 
 /**
  * Dispatches gallery pages.
  * URLs take the form of
- *  All images:       elgg-gallery/all
- *  Gallery Image:    blog/view/<guid>/<title>
- *  New image:        elgg-gallery/add/<guid>
+ *  All images of user:       elgg-gallery/all
+ *  Gallery Image:            elgg-gallery/view/<guid>
+ *  New image:                elgg-gallery/add
+ *  Delete image:             elgg-gallery/delete/<guid>
  */
-function blog_page_handler($page)
+function gallery_page_handler($page)
 {
   elgg_load_library('elgg:gallery');
 
@@ -50,21 +54,22 @@ function blog_page_handler($page)
   switch($page_type)
   {
     case 'view':
-      $params = gallery_get_page_content_read($page[1]);
+      $params = gallery_get_page_content_show($page[1]);
       break;
     case 'add':
       gatekeeper();
-      $params = gallery_get_page_content_edit($page_type, $page[1]);
+      $params = gallery_get_page_content_add();
+      break;
+    case 'delete':
+      gatekeeper();
+      $params = gallery_get_page_content_delete($page[1]);
       break;
     case 'all':
-      $params = gallery_get_page_content_list();
+      $params = gallery_get_page_content_all();
       break;
     default:
       return false;
   }
-
-  if(isset($params['sidebar']))
-    $params['sidebar'] .= elgg_view('elgg-gallery/sidebar', array('page' => $page_type));
 
   $body = elgg_view_layout('content', $params);
 
