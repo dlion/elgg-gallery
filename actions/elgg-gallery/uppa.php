@@ -92,10 +92,8 @@ if (isset($_FILES['img_upload']['name']) && !empty($_FILES['img_upload']['name']
     }
     if ($guid)
     {
-        //Set relationship image-user
-      //  add_entity_relationship($guid, 'image-user' , $owner);
-        $message = elgg_echo("file:saved");
+        $message = elgg_echo("gallery:status:upsuccess");
         system_message($message);
-        forward("/elgg-gallery/view/$guid");
+        forward("elgg-gallery/view/$guid");
     }
 }
