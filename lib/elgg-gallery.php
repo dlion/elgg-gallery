@@ -17,7 +17,7 @@ function gallery_get_page_content_add()
 
     //Create Array values to return
     $return = array(
-        'title' => 'Aggiungi Immagine',
+        'title' => elgg_echo('gallery:title:add'),
         'content' => elgg_view_form('elgg-gallery/uppa', $vars,$body_vars)
         );
 
@@ -47,10 +47,35 @@ function gallery_get_page_content_all()
                                                             'img_guid' => $key['guid']
                                                             ));
     else
-        $immagine = elgg_view('elgg-gallery/error', array('error' => 'Nessuna Immagine nella tua Galleria!'));
+        $immagine = elgg_view('elgg-gallery/error', array('error' => elgg_echo('gallery:no:imagegallery')));
 
     $return = array(
-        'title' => 'Tutte le Immagini',
+        'title' => elgg_echo('gallery:title:showall'),
+        'content' => $immagine);
+
+    return $return;
+}
+
+/**
+ * Get page components to view an image
+ *
+ * @return  array
+ */
+function gallery_get_page_content_show($GUID)
+{
+    if(!$GUID || !$img = get_entity($GUID))
+    {
+        $immagine = elgg_view('elgg-gallery/error', array('error' => elgg_echo('gallery:no:imageshow')));
+        $titolo = elgg_echo('gallery:title:error',array(elgg_echo('gallery:no:imageshow')));
+    }
+    else
+    {
+        $titolo = elgg_echo('gallery:title:showone',array($img->title));
+        $immagine = elgg_view('elgg-gallery/view',array('title' => $img->title, 'desc' => $img->description, 'image' => $img->getIconURL('large'), 'guid' => $img->guid, 'action' => elgg_echo('gallery:delete:link')));
+    }
+
+    $return = array(
+        'title' => $titolo,
         'content' => $immagine);
 
     return $return;
