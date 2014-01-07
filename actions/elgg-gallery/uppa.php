@@ -7,7 +7,7 @@ $titolo = get_input('img_title');
 $descrizione = get_input('img_descr');
 $owner = get_input('container_guid');
 
-// Se non abbiamo nessun file
+// If we don't have any files
 if (empty($_FILES['img_upload']['name']))
 {
     $error = elgg_echo('file:nofile');
