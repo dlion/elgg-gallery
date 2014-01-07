@@ -15,6 +15,10 @@ function gallery_init()
   // Add Library
   elgg_register_library('elgg:gallery', elgg_get_plugins_path().'elgg-gallery/lib/elgg-gallery.php');
 
+  // Site navigation
+  $item = new ElggMenuItem('elgg-gallery', 'Gallery', 'elgg-gallery/all');
+  elgg_register_menu_item('site', $item);
+
   //Add custom CSS
   elgg_extend_view('css/elgg', 'elgg-gallery/css');
 

@@ -15,7 +15,8 @@ $english = array(
     //Status
     'gallery:status:upsuccess' => 'Image uploaded successfull!',
     //Action
-    'gallery:delete:link' => 'Delete image'
+    'gallery:delete:link' => 'Delete image',
+    'gallery:delete:img' => 'Image deleted successfull'
 );
 
 add_translation("en", $english);

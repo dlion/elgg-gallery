@@ -94,6 +94,6 @@ if (isset($_FILES['img_upload']['name']) && !empty($_FILES['img_upload']['name']
     {
         $message = elgg_echo("gallery:status:upsuccess");
         system_message($message);
-        forward("elgg-gallery/view/$guid");
+        forward("elgg-gallery/all");
     }
 }

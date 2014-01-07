@@ -15,7 +15,8 @@ $italiano = array(
     // Status
     'gallery:status:upsuccess' => 'Immagine caricata correttamente!',
     // Action
-    'gallery:delete:link' => 'Cancella Immagine'
+    'gallery:delete:link' => 'Cancella Immagine',
+    'gallery:delete:img' => 'Immagine rimossa correttamente!'
 );
 
 add_translation("it", $italiano);

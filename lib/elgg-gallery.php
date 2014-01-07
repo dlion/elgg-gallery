@@ -80,3 +80,20 @@ function gallery_get_page_content_show($GUID)
 
     return $return;
 }
+
+function gallery_get_page_content_delete($GUID)
+{
+    if(!$GUID || !$img = get_entity($GUID))
+    {
+        $immagine = elgg_view('elgg-gallery/error', array('error' => elgg_echo('gallery:no:imageshow')));
+        $titolo = elgg_echo('gallery:title:error',array(elgg_echo('gallery:no:imageshow')));
+    }
+    else
+    {
+        //Delete image
+        $img->delete();
+        $message = elgg_echo("gallery:delete:img");
+        system_message($message);
+        forward("elgg-gallery/all");
+    }
+}
